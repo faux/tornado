@@ -189,6 +189,8 @@ class IOLoop(object):
             self._events.update(event_pairs)
             while self._events:
                 fd, events = self._events.popitem()
+                if not fd in self._handlers:
+                    continue
                 try:
                     self._handlers[fd](fd, events)
                 except KeyboardInterrupt:
